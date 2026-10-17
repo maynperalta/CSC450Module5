@@ -11,7 +11,7 @@ int main() {
 	std::ofstream myFile("CSC450_CT5_mod5.txt", std::ios::app);
 
 	if (myFile.is_open()) {
-		myFile << cUserInput << '\n';
+		myFile << '\n' << '\n' << cUserInput << '\n';
 		myFile.close();
 		
 		std::cout << "File successfully appended.\n";
