@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream> 
 #include <string>
+#include <algorithm>
 
 int main() {
 	std::string cUserInput;
@@ -21,17 +22,35 @@ int main() {
 	}
 // Open file for reading	
 	std::ifstream inputFile("CSC450_CT5_mod5.txt");
-	if (inputFile.is_open()) {
-		std::string cLine;
-		
-		while (std::getline(inputFile, cLine)) {
-			std::cout << cLine << "\n";
-		}
-		inputFile.close();
-	} else {
+	if (!inputFile.is_open()) {
 		std::cerr << "Error: Could not open file for reading.\n";
 		return 1;
 	}
-	myFile.close();
+	
+	std::string fileContents;
+	std::string cLine;
+// Read and display file while preserving line breaks
+	while (std::getline(inputFile, cLine)) {
+		std::cout << cLine << '\n';
+		fileContents += cLine;
+		
+		if (!inputFile.eof()) {
+			fileContents += '\n';
+		}
+	}	
+	inputFile.close();
+// Reverse every character in contents
+	std::reverse(fileContents.begin(), fileContents.end());
+// Write reversed contents to a new file
+	std::ofstream reverseFile("CSC450-mod5-reverse.txt");
+	if (!reverseFile.is_open()) {
+		std::cerr << "Error: Could not create reversed file.\n";
+		return 1;
+	}
+	
+	reverseFile << fileContents;
+	reverseFile.close();
+	
+	std::cout << "\nReversed contents saved to CSC450-mod5-reverse.txt.\n";
 	return 0;
 }
